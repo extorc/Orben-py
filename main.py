@@ -5,13 +5,15 @@ from Vec import Vec
 from Phy import CalculateG
 
 screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
-active = True
-clock = pygame.time.Clock()
 pygame.font.init()
 my_font = pygame.font.SysFont('Mono', 20)
+clock = pygame.time.Clock()
+
 body = Body([0, 200, 0], Vec(700, 0), 31.9)
 body2 = NBody([200, 0, 0], Vec(732.9, 0), 2)
 body2.velocity.y = 5.458/100
+
+active = True
 cycle = 0
 pointList = [Vec.ToTuple(Body.PositionInPlane(screen, Vec(732.9, 0)))]
 
@@ -37,6 +39,7 @@ while active:
 
    pygame.draw.lines(screen, (255, 0, 0), False, pointList)
    pygame.draw.line(screen, (200, 0, 0), Vec.ToTuple(Body.PositionInPlane(screen, body2.position)),Vec.ToTuple(Body.PositionInPlane(screen, body.position)))
+   
    text = my_font.render(f'{math.sqrt(distSQ) * 200} Km', False, (255, 0, 0))
    text2 = my_font.render(f'{body2.velocity.Mag() * 200} km/s', False, (255, 0, 0))
    text3 = my_font.render(f'{g.Mag() * 200000} m/s2', False, (255, 0, 0))
@@ -46,7 +49,6 @@ while active:
    screen.blit(text2, (0,25))
    screen.blit(text3, (0,50))
    screen.blit(text4, (0,75))
-   print(f'{cycle} |{g.x}, {g.y} | {round(slope, 5)}')
 
    cycle += 1
    pygame.display.update()
