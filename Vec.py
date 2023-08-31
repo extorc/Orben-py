@@ -11,6 +11,9 @@ class Vec:
     def __sub__(self, v2):
         return Vec(self.x - v2.x, self.y - v2.y)
     
+    def multiply(self, x):
+        return Vec(self.x * 10, self.y * 10)
+    
     def Mag(self):
         return math.sqrt(self.x**2 + self.y**2)
     
