@@ -3,6 +3,7 @@ from Body import Body, NBody
 import math
 from Vec import Vec
 from Phy import pixelScale, PhyUpdate
+from Font import RenderText
 
 screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 pygame.font.init()
@@ -28,7 +29,7 @@ while active:
    body.Draw(screen)
    body2.Draw(screen)
    body3.Draw(screen)
-   
+
    if cycle % 500 == 0:
       pointList.append(Vec.ToTuple(Body.PositionInPlane(screen, body2.position)))
 
@@ -39,17 +40,11 @@ while active:
    pygame.draw.lines(screen, (255, 0, 0), False, pointList)
    pygame.draw.line(screen, (200, 0, 0), Vec.ToTuple(Body.PositionInPlane(screen, body2.position)),Vec.ToTuple(Body.PositionInPlane(screen, body.position)))
    
-   text = my_font.render(f'{math.sqrt(distSQ) * pixelScale} Km', False, (255, 0, 0))
-   text2 = my_font.render(f'{math.sqrt(distSQ2) * pixelScale} Km', False, (255, 0, 0))
-   text3 = my_font.render(f'{body2.velocity.Mag() * pixelScale} km/s', False, (255, 0, 0))
-   text4 = my_font.render(f'{g.Mag() * (pixelScale * 1000)} m/s2', False, (255, 0, 0))
-   text5 = my_font.render(f'{cycle}', False, (255, 0, 0))
-
-   screen.blit(text, (0,0))
-   screen.blit(text2, (0,25))
-   screen.blit(text3, (0,50))
-   screen.blit(text4, (0,75))
-   screen.blit(text5, (0,100))
+   RenderText(my_font, screen, f'{math.sqrt(distSQ) * pixelScale} Km', 0)
+   RenderText(my_font, screen, f'{math.sqrt(distSQ2) * pixelScale} Km', 1)
+   RenderText(my_font, screen, f'{body2.velocity.Mag() * pixelScale} km/s', 2)
+   RenderText(my_font, screen, f'{(g + g2).Mag() * (pixelScale * 1000)} m/s2', 3)
+   RenderText(my_font, screen, f'{cycle}', 4)
 
    cycle += 1
    pygame.display.update()
